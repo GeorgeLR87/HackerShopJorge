@@ -27,7 +27,7 @@ class App extends Component {
         }
         this.addToCart = this.addToCart.bind(this);
         this.removeFromCart = this.removeFromCart.bind(this);
-        this.setFirstName = this.setFirstName.bind(this)
+        this.descuentos = this.descuentos.bind(this)
     }
 
     addToCart(index) {
@@ -67,31 +67,34 @@ class App extends Component {
     newCart(cart){
         
         const subTotal = [...cart.items].reduce( (acumulador, item) => acumulador + item.price, 0)
-        const descuento = this.state.cart.discount    
-        const totalPrice = subTotal - descuento
+        const discount = this.state.cart.discount * subTotal
+        const totalPrice = subTotal - discount
 
         this.setState(
             {cart:
          { ...this.state.cart, 
             subTotal, 
-            totalPrice}})
+            discount,
+            totalPrice
+        }})
 
             
        }
   
-       setFirstName(event) {
+       descuentos(event) {
 
         const subtotal = this.state.cart.subTotal 
 
         const discount = parseFloat(event / 100) * subtotal
 
-       //console.log(typeof discount)
-        //console.log(subtotal)
+        const totalPrice = this.state.cart.totalPrice - discount
 
         this.setState(
             {cart:
          {...this.state.cart, 
-            discount            
+            subtotal,
+            discount,
+            totalPrice          
             }
         })
            
@@ -107,7 +110,7 @@ class App extends Component {
                 <h8k-navbar header={title}></h8k-navbar>
                 <div className="layout-row shop-component">
                     <ProductList products={this.state.products} addition={this.addToCart} remove={this.removeFromCart}/>
-                    <Cart cart={this.state.cart} set={this.setFirstName}/>
+                    <Cart cart={this.state.cart} set={this.descuentos}/>
                 </div>
             </div>
         );
