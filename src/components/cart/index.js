@@ -35,6 +35,8 @@ export default class Cart extends Component {
                                         {cartItem.price}
                                     </td>
                                 </tr>
+
+                               
                             )
                         })
                     }

@@ -2,9 +2,7 @@ import React, {Component} from "react";
 import "./index.css";
 
 export default class ProductList extends Component {
-    constructor() {
-        super();
-    }
+    
 
     render() {
 
@@ -23,13 +21,25 @@ export default class ProductList extends Component {
                                     <p className="ma-0 mt-8 text-center">${product.price}</p>
                                 </div>
                                 <div className="card-actions justify-content-center pa-4">
-                                    <button className="x-small outlined" data-testid="btn-item-add">
+                                    {
+                                        product.cartQuantity === 0 
+                                        ?
+                                        <button className="x-small outlined" data-testid="btn-item-add"
+                                        onClick={() => {this.props.addition(product.id - 1);}}
+                                        >
                                         Add To Cart
-                                    </button>
+                                        </button>
+                                        :
 
-                                    <button className="x-small danger" data-testid="btn-item-remove">
+                                        <button className="x-small danger" data-testid="btn-item-remove"
+                                        onClick={() => {this.props.remove(product.id - 1);}}
+                                        >
                                         Remove
-                                    </button>
+                                        </button>
+
+                                    }
+                        
+                                    
                                 </div>
                             </div>
                         </section>

@@ -43,10 +43,12 @@ class App extends Component {
             products,
             cart
         })
+        this.newCart(cart)
     }
 
     removeFromCart(index) {
         const products = this.state.products;
+        console.log(products);
         products[index].cartQuantity = 0;
         let cart = {...this.state.cart};
         let cartIndex = this.state.cart.items.findIndex(item => item.id === products[index].id);
@@ -55,7 +57,27 @@ class App extends Component {
             cart,
             products
         })
+
+        this.newCart(cart)
     }
+
+    
+
+    newCart(cart){
+
+        const subTotal = [...cart.items].reduce( (acumulador, item) => acumulador + item.price, 0)
+        
+        const totalPrice = subTotal
+
+        
+
+        this.setState({cart: { ...this.state.cart, subTotal, totalPrice}})
+        
+       }
+  
+          
+       
+
 
 
     render() {
@@ -64,7 +86,7 @@ class App extends Component {
             <div>
                 <h8k-navbar header={title}></h8k-navbar>
                 <div className="layout-row shop-component">
-                    <ProductList products={this.state.products}/>
+                    <ProductList products={this.state.products} addition={this.addToCart} remove={this.removeFromCart}/>
                     <Cart cart={this.state.cart}/>
                 </div>
             </div>
@@ -105,3 +127,8 @@ export const PRODUCTS = [
     }
 ];
 export default App;
+ 
+
+
+
+
